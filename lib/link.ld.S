@@ -6,7 +6,10 @@ SECTIONS
 
   .jump_table :
   {
-    *(.jump_table)
+    LONG((__extern_func_end - __extern_func_start) / 4);  /* num_functions */
+    __extern_func_start = .;
+    *(.extern_func)
+    __extern_func_end = .;
   }
   
   .text :

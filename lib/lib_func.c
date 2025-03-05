@@ -17,6 +17,7 @@ int func0(void* args) {
     uart_print("func0 called\n");
     return 0;
 }
+REGISTER_FUNCTION(func0);
 
 // Example function 1
 int func1(void* args) {
@@ -24,6 +25,4 @@ int func1(void* args) {
     uart_print("func1 called\n");
     return 0;
 }
-
-// Jump table with all functions - automatically counts the number of functions
-MAKE_JUMP_TABLE(func0, func1);
+REGISTER_FUNCTION(func1);
