@@ -5,7 +5,7 @@
 #define UART0 ((volatile unsigned char *)0x10000000)
 
 // Helper function to print a string to UART
-static inline void uart_print(const char *str) {
+ALWAYS_INLINE void uart_print(const char *str) {
     while (*str) {
         *UART0 = *str++;
     }
