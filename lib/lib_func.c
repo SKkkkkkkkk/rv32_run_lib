@@ -1,24 +1,29 @@
 #include "../shared_memory.h"
+#include "lib_registry.h"
 
-static int lib_data = 1;
+// QEMU virt UART address
+#define UART0 ((volatile unsigned char *)0x10000000)
 
-// 示例函数0
-int func0(void* args) {
-    return (*(int*)args)++ + lib_data;
-}
-
-// 示例函数1
-int func1(void* args) {
-    return (*(int*)args)-- - lib_data;
-}
-
-// 跳转表
-JumpTable jump_table
-__attribute__((section(".jump_table")))
-= {
-    .num_functions = 2,
-    .functions = {
-        func0, 
-        func1
+// Helper function to print a string to UART
+static inline void uart_print(const char *str) {
+    while (*str) {
+        *UART0 = *str++;
     }
-};
+}
+
+// Example function 0
+int func0(void* args) {
+    (void)args;
+    uart_print("func0 called\n");
+    return 0;
+}
+
+// Example function 1
+int func1(void* args) {
+    (void)args;
+    uart_print("func1 called\n");
+    return 0;
+}
+
+// Jump table with all functions - automatically counts the number of functions
+MAKE_JUMP_TABLE(func0, func1);

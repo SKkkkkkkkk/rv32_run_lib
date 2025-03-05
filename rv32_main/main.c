@@ -1,5 +1,6 @@
 #include "../shared_memory.h"
 #include <stdint.h>
+
 int main() {
     JumpTable *jump_table = (JumpTable *)LIBFUNCS_BASE;
     int arg = 0, ret = 0; (void)ret;
